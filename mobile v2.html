@@ -1,0 +1,244 @@
+<script type="text/javascript">
+    try {
+
+        function showOverlay() {
+            const prompt = document.createElement('div')
+            prompt.className = 'tt-overlay';
+            prompt.id = 'tt-overlay';
+            prompt.innerHTML = `
+    <div class="tt-backdrop-overlay">
+        <div class="tt-backdrop-stage-overlay" style="position: relative;">
+            <div class="tt-prompt-overlay">
+                <div class="bottom-container">
+                    <div style="width:100%;">
+                        <div style="float: right;padding: 10px;">
+                            <div style="display: flex; justify-content:space-between;"> 
+                                <button class="tt-close-overlay">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px" viewBox="0 0 15 15" version="1.1"> <!-- Generator: Sketch 59.1 (86144) - https://sketch.com --> <title>Action/Remove_Close</title> <desc>Created with Sketch.</desc> <g id="Standards" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Current-Icons" transform="translate(-738.000000, -406.000000)" fill="#F96302"> <g id="Action/Remove_Close" transform="translate(738.000000, 406.000000)"> <path d="M12.0208153,2.84661184e-13 L14.1421356,2.12132034 L9.192,7.071 L14.1421356,12.0208153 L12.0208153,14.1421356 L7.071,9.192 L2.12132034,14.1421356 L2.84217094e-13,12.0208153 L4.949,7.071 L2.83773005e-13,2.12132034 L2.12132034,2.84661184e-13 L7.071,4.949 L12.0208153,2.84661184e-13 Z"></path> </g> </g> </g> </svg>
+                              </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                    <iframe src="https://webcontent.lutron.com/homedepot/us/en/tools/wiringwizard?id=q71&p=q71&mn=DVCL-153PR" style="width: 100%;min-height: 680px;">
+                    </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`.trim();
+
+            prompt.onclick = function (e) {
+                if (e.target.classList.contains('tt-backdrop-overlay') || e.target.classList.contains(
+                        'tt-backdrop-stage-overlay') || e.target.classList.contains('tt-close-overlay') || e.target
+                    .closest('.tt-close-overlay')) {
+                    closePrompt.call(prompt);
+                }
+            }
+
+            function closePrompt() {
+                document.body.classList.remove('no-scroll-overlay');
+                if (document.querySelector(".QSIFeedBackLink ")) {
+                    document.querySelector(".QSIFeedBackLink ").style.display = '';
+                }
+                if (document.querySelector(".QSIFeedBackLink ")) {
+                    document.querySelector(".LPMcontainer.LPMoverlay").style.display = '';
+                }
+
+                this.remove()
+            }
+            document.body.append(prompt);
+            document.body.classList.add('no-scroll-overlay');
+            if (document.querySelector(".QSIFeedBackLink ")) {
+                document.querySelector(".QSIFeedBackLink ").style.display = 'none';
+            }
+            if (document.querySelector(".QSIFeedBackLink ")) {
+                document.querySelector(".LPMcontainer.LPMoverlay").style.display = 'none';
+            }
+        }
+
+
+        function loadNewUI() {
+
+            if (document.querySelectorAll('.buybox__card')) {
+                const listItems = document.querySelectorAll('.buybox__card')[0];
+                const newEl = document.createElement("div");
+                newEl.className = "buybox__card";
+                newEl.id = "tnt_change"
+                let newHtml = `<div class="product-add-ons__card" style="height: 50px;">
+    <div class="buybox__add-on product-add-ons-pod">
+        <div class="product-add-ons-pod__content">
+            <div class="product-add-ons-pod__icon-wrapper" style="width: 25%;">
+                <img src="https://contentgrid.homedepot-static.com/hdus/en_US/DTCCOMNEW/Helper-Apron-Icon-Person.jpg" alt="" class="product-add-ons-pod__icon" height="24" width="72" aria-hidden="true" loading="lazy">
+            </div>
+            <div>
+                <div class="product-add-ons-pod__content__main"><span
+                        class="product-add-ons-pod__content__main__title" style="font-size: 1.4rem;">Need Help with Installation?</span></div>
+                <div data-testid="subHeading" style="margin-bottom: 2.5px;">We have just what you need. </div>
+                <div>
+                    <button id="tnt-button" class="bttn-outline bttn-outline--primary" style="width: 100%; height: 22px;">
+                     <span class="bttn__content" >Install Guide</span>
+                    </button>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>`;
+
+                newEl.innerHTML = newHtml;
+                if (!document.getElementById('tnt_change')) {
+                    listItems.after(newEl);
+                }
+
+                newEl.innerHTML = newHtml;
+                if (!document.getElementById('tnt_change')) {
+                    listItems.after(newEl);
+                }
+
+                document
+                    .getElementById('tnt-button')
+                    .addEventListener('click', function (e) {
+
+                        if (!document.getElementById('tt-overlay')) {
+                            showOverlay();
+                        }
+                    })
+            }
+        }
+
+        function removeElements() {
+
+            let settimer = setInterval(function () {
+                if (document.querySelector(".bullet-list.bullet-list--margin.list.list--type-square")) {
+                    let ul = document.querySelector(".bullet-list.bullet-list--margin.list.list--type-square");
+                    let list_items = ul.querySelectorAll(".list__item");
+
+                    for (let i = 0; i < list_items.length; i++) {
+                        if (list_items[i].querySelector("img") || list_items[i].innerText.includes(
+                                "Need installation help")) {
+                            list_items[i].remove()
+                        }
+                        clearInterval(settimer)
+                    };
+
+                }
+            }, 700);
+
+
+        }
+
+
+
+        let timerCounter = 1;
+        let timer = setInterval(function () {
+            timerCounter = timerCounter + 1;
+            if (window.LIFE_CYCLE_EVENT_BUS) {
+                clearInterval(timer)
+                window.LIFE_CYCLE_EVENT_BUS.lifeCycle.on("super-sku.click-swatch", (d) => {
+                    removeElements()
+                });
+                window.LIFE_CYCLE_EVENT_BUS.lifeCycle.on("ddo.ready", (d) => {
+                    removeElements()
+                });
+            };
+        }, 700);
+        if (timerCounter > 2000) {
+            clearInterval(timer);
+        }
+    } catch (error) {
+        console.log("do something about this milind :-" + error)
+    }
+
+
+
+    try {
+        let cartObserver
+
+        const tt = ({
+            animationName,
+            target
+        }) => {
+            if (animationName === 'cart-loaded') {
+
+
+
+                cartObserver && cartObserver.disconnect()
+
+                cartObserver = new MutationObserver(mutations => {
+                    mutations.forEach(mutation => {
+
+
+                        if (mutation.addedNodes.length > 0) {
+
+                            if (mutation.target.className.includes(
+                                    "buybox-wrapper buybox-wrapper--card-background col__12-12")) {
+                                // removeElements();
+                                loadNewUI();
+                            }
+                        }
+                    })
+                })
+
+                cartObserver.observe(target, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                    attributeFilter: ['class']
+                })
+            }
+
+        }
+
+        document.addEventListener("animationstart", tt, false)
+        document.addEventListener("MSAnimationStart", tt, false)
+        document.addEventListener("webkitAnimationStart", tt, false)
+    } catch (error) {
+        cartObserver && cartObserver.disconnect()
+    }
+</script>
+
+<style>
+    .tt-overlay .tt-prompt-overlay {
+        z-index: 100;
+        background: #fff;
+        width: 100%;
+        min-height: 500px;
+        margin: 0 auto;
+    }
+
+    .tt-overlay .tt-backdrop-overlay {
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        pointer-events: auto;
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.5);
+        transition: background-color .3s ease;
+        z-index: 200;
+    }
+
+    body.no-scroll-overlay {
+        overflow: hidden;
+    }
+
+    .tt-close-overlay {
+        align-self: flex-start;
+    }
+</style>
+<style id="styles-xxxx">
+    @keyframes cart-loaded {
+        from {
+            opacity: 0.99;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    div[data-lg-name="buybox"] {
+        animation: cart-loaded 0.001s;
+    }
+</style>
